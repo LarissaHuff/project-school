@@ -1,5 +1,6 @@
 package com.projectschool.model;
 
+import com.projectschool.service.DocumentType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +17,7 @@ public class Person {
     private String name;
     private LocalDate birthDate;
     private String documentNumber;
-    private String documentType;
+
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
 }
