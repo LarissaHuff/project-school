@@ -30,8 +30,13 @@ public class PersonController {
         return personService.getById(id);
     }
 
-    @DeleteMapping
-    public void deleteById(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         personService.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updatePerson(@PathVariable Long id, @RequestBody PersonDTO personDTO){
+        personService.updatePerson(id,personDTO);
     }
 }

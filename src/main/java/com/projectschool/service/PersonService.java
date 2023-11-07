@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -14,7 +15,7 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public void registerPerson(PersonDTO personDTO){
+    public void registerPerson(PersonDTO personDTO) {
         Person person = new Person();
         person.setName(personDTO.name());
         person.setBirthDate(personDTO.birthDate());
@@ -24,20 +25,31 @@ public class PersonService {
         personRepository.save(person);
     }
 
-    public List<Person> getAllByName(String name){
-        if(name == null){
+    public List<Person> getAllByName(String name) {
+        if (name == null) {
             return personRepository.findAll();
         }
-        return  personRepository.findAllByNameContainingIgnoreCase(name);
+        return personRepository.findAllByNameContainingIgnoreCase(name);
     }
 
-    public Person getById(Long id){
+    public Person getById(Long id) {
         return personRepository.findById(id).orElseThrow();
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         personRepository.deleteById(id);
     }
 
+    public void updatePerson(Long id, PersonDTO personDTO) {
+        Person person = getById(id);
 
+        person.setName(personDTO.name());
+        person.setBirthDate(personDTO.birthDate());
+        person.setDocumentNumber(personDTO.documentNumber());
+        person.setDocumentType(personDTO.documentType());
+
+        personRepository.save(person);
+
+
+    }
 }
