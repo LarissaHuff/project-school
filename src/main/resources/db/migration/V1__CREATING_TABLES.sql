@@ -26,6 +26,7 @@ create table student_class(
 
 create table subject(
     id bigint not null auto_increment,
+    name varchar(20) not null,
 
     primary key(id)
 );

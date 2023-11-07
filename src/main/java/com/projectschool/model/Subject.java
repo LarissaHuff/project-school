@@ -14,6 +14,7 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     @OneToMany(mappedBy="subject")
     private Set<SubjectClass> subjectClasses;
 
