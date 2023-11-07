@@ -1,4 +1,4 @@
-package com.projectschool.Repository;
+package com.projectschool.repository;
 
 import com.projectschool.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findAllByNameContainingIgnoreCase(String name);
+
 }

@@ -1,39 +1,37 @@
 package com.projectschool.service;
 
-import com.projectschool.Repository.PersonRepository;
-import com.projectschool.dto.DtoPerson;
+import com.projectschool.repository.PersonRepository;
+import com.projectschool.dto.PersonDTO;
 import com.projectschool.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
-
 public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public void registerPerson(DtoPerson dtoPerson){
+    public void registerPerson(PersonDTO personDTO){
         Person person = new Person();
-        person.setName(dtoPerson.name());
-        person.setBirthDate(dtoPerson.birthDate());
-        person.setDocumentNumber(dtoPerson.documentNumber());
-        person.setDocumentType(dtoPerson.documentType());
+        person.setName(personDTO.name());
+        person.setBirthDate(personDTO.birthDate());
+        person.setDocumentNumber(personDTO.documentNumber());
+        person.setDocumentType(personDTO.documentType());
+
         personRepository.save(person);
-
     }
 
-    public List<Person> getAll(){
-        return personRepository.findAll();
-    }
-
-    public List<Person> getByName(String name){
+    public List<Person> getAllByName(String name){
+        if(name == null){
+            return personRepository.findAll();
+        }
         return  personRepository.findAllByNameContainingIgnoreCase(name);
     }
 
-    public Person getByid(Long id){
+    public Person getById(Long id){
         return personRepository.findById(id).orElseThrow();
     }
 
