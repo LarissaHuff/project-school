@@ -49,6 +49,7 @@ create table teacher(
 
 create table course(
    id bigint not null auto_increment,
+   name varchar (50) not null,
    description varchar(30) not null,
    acronym varchar(10) not null,
 
