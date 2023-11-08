@@ -1,13 +1,12 @@
 package com.projectschool.service;
 
-import com.projectschool.repository.PersonRepository;
 import com.projectschool.dto.PersonDTO;
 import com.projectschool.model.Person;
+import com.projectschool.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
