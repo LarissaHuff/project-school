@@ -6,13 +6,38 @@ import com.projectschool.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    public void register(CourseDTO courseDTO){
+    public void register(CourseDTO courseDTO) {
         Course course = new Course();
+        course.setName(courseDTO.name());
+        course.setDescription(courseDTO.description());
+        course.setAcronym(courseDTO.acronym());
+
+        courseRepository.save(course);
+    }
+
+    public List<Course> getAllByName(String name) {
+        if (name == null) {
+            return courseRepository.findAll();
+        }
+        return courseRepository.findAllByNameContainingIgnoreCase(name);
+    }
+    public Course findById(Long id) {
+        return courseRepository.findById(id).orElseThrow();
+    }
+
+    public void deleteById(Long id){
+        courseRepository.deleteById(id);
+    }
+
+    public void update(Long id, CourseDTO courseDTO){
+        Course course = findById(id);
         course.setName(courseDTO.name());
         course.setDescription(courseDTO.description());
         course.setAcronym(courseDTO.acronym());
