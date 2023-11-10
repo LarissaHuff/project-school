@@ -19,4 +19,7 @@ public class Subject {
     @OneToMany(mappedBy="subject")
     private Set<SubjectClass> subjectClasses;
 
+    @OneToMany(mappedBy ="subject")
+    private Set<CourseSubject> courseSubjectSet;
+
 }

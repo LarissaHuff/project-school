@@ -20,6 +20,7 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private Set<Student> students;
 
-
+    @OneToMany(mappedBy ="course")
+    private Set<CourseSubject> courseSubjectSet;
 
 }
