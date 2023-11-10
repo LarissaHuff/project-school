@@ -28,15 +28,16 @@ public class CourseService {
         }
         return courseRepository.findAllByNameContainingIgnoreCase(name);
     }
+
     public Course findById(Long id) {
         return courseRepository.findById(id).orElseThrow();
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         courseRepository.deleteById(id);
     }
 
-    public void update(Long id, CourseDTO courseDTO){
+    public void update(Long id, CourseDTO courseDTO) {
         Course course = findById(id);
         course.setName(courseDTO.name());
         course.setDescription(courseDTO.description());
@@ -46,4 +47,8 @@ public class CourseService {
     }
 
 
+    public Course findByAcronym(String acronym) {
+        return courseRepository.findByAcronym(acronym).orElseThrow();
+
+    }
 }

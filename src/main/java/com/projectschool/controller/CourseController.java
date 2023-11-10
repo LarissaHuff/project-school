@@ -27,7 +27,7 @@ public class CourseController {
         List<Course> courseList = courseService.getAllByName(name);
 
         return courseList.stream()
-                .map(it -> new CourseViewDTO(it))
+                .map(CourseViewDTO::new)
                 .collect(Collectors.toList());
 
         /*var list = new ArrayList<CourseViewDTO>();
@@ -35,11 +35,7 @@ public class CourseController {
             var courseViewDTO = new CourseViewDTO(course);
             list.add(courseViewDTO);
         }
-
-
         return list;
-
-
         */
     }
 
