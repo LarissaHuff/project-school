@@ -24,12 +24,13 @@ public class CourseSubjectController {
     }
 
     @GetMapping
-    public List<CourseSubjectViewDTO> getAll(){
-       return courseSubjectService.getAll();
+    public List<CourseSubjectViewDTO> getAll() {
+
+        return courseSubjectService.getAll();
     }
 
     @GetMapping("/course/{acronym}/subjects")
-    public List<SubjectByCourseViewDTO> getAllByCourse(@PathVariable String acronym, @RequestParam(required = false) String semester){
+    public List<SubjectByCourseViewDTO> getAllByCourse(@PathVariable String acronym, @RequestParam(required = false) String semester) {
         return courseSubjectService.getAllSubjectsByCourse(acronym, semester);
     }
 

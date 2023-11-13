@@ -5,21 +5,25 @@ import com.projectschool.dto.CourseViewDTO;
 import com.projectschool.model.Course;
 import com.projectschool.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/courses")
 public class CourseController {
     @Autowired
     CourseService courseService;
 
     @PostMapping
-    public void register(@RequestBody CourseDTO courseDTO) {
-        courseService.register(courseDTO);
+    public ResponseEntity<Void> register(@RequestBody CourseDTO courseDTO) {
+        var createdId = courseService.register(courseDTO);
+        return ResponseEntity.created(URI.create("/courses/" + createdId)).build();
     }
 
     @GetMapping

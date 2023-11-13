@@ -13,13 +13,13 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    public void register(CourseDTO courseDTO) {
+    public Long register(CourseDTO courseDTO) {
         Course course = new Course();
         course.setName(courseDTO.name());
         course.setDescription(courseDTO.description());
         course.setAcronym(courseDTO.acronym());
 
-        courseRepository.save(course);
+        return courseRepository.save(course).getId();
     }
 
     public List<Course> getAllByName(String name) {

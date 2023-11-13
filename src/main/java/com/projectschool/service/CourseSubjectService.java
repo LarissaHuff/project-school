@@ -58,7 +58,6 @@ public class CourseSubjectService {
         Course course = courseService.findByAcronym(acronym);
         List<CourseSubject> courseSubject = courseSubjectRepository.findAllByCourseId(course.getId());
 
-
         return courseSubject.stream()
                 .map(SubjectByCourseViewDTO::new)
                 .sorted(Comparator.comparing(SubjectByCourseViewDTO::semester))
