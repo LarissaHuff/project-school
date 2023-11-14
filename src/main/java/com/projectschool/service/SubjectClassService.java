@@ -40,4 +40,12 @@ public class SubjectClassService {
 
     }
 
+    public Set<SubjectClass> findAllByTeacher(Long teacherId){
+       Teacher teacher = teacherService.findById(teacherId);
+       return teacher.getSubjectClass();
+    }
+
+    public List<SubjectClass>findAll(){
+       return repository.findAll();
+    }
 }

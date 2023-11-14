@@ -7,6 +7,7 @@ import com.projectschool.service.SubjectClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,12 +22,22 @@ public class SubjectClassController {
        classService.register(subjectClassDTO);
     }
 
-    @GetMapping
-    public Set<SubjectClassViewDTO> findAllBySubject(@RequestParam Long subjectId){
-
+    @GetMapping("/subject/{subjectId}")
+    public Set<SubjectClassViewDTO> findAllBySubject(@PathVariable Long subjectId){
         return classService.findAllBySubject(subjectId).stream()
                 .map(SubjectClassViewDTO::new)
                 .collect(Collectors.toSet());
+    }
+    @GetMapping("/teacher/{teacherId}")
+    public List<SubjectClassViewDTO> findAllByTeacher(@PathVariable Long teacherId){
+        return classService.findAllByTeacher(teacherId).stream()
+                .map(SubjectClassViewDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping
+    public List<SubjectClass>findAll(){
+        return classService.findAll();
     }
 
 
