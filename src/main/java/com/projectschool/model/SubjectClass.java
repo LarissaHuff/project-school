@@ -24,10 +24,15 @@ public class SubjectClass {
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
+    private Integer vacancies;
 
-    //private Integer vacancies;
+    public Integer getAvailableVacancies() {
+        Integer occupied = studentClassSet.size();
+         return vacancies - occupied;
+    }
 
-
-
+    public Integer occupiedVacancies(){
+        return studentClassSet.size();
+    }
 
 }

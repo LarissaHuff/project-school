@@ -6,6 +6,9 @@ import com.projectschool.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -21,4 +24,13 @@ public class StudentController {
     public StudentViewDTO findById(@PathVariable Long id){
        return new StudentViewDTO(studentService.findById(id));
     }
+
+    @GetMapping
+    public List<StudentViewDTO> findAll(){
+        return studentService.findAll().stream()
+                .map(StudentViewDTO::new)
+                .collect(Collectors.toList());
+    }
 }
+
+

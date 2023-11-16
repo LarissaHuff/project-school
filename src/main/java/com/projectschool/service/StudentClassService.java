@@ -21,10 +21,16 @@ public class StudentClassService {
     SubjectClassService subjectClassService;
 
     public void register(StudentClassDTO studentClassDTO) {
-        StudentClass studentClass = new StudentClass();
-        Student student = studentService.findById(studentClassDTO.studentId());
         SubjectClass subjectClass = subjectClassService.findById(studentClassDTO.subjectClassId());
+        Integer vacancies = subjectClass.getAvailableVacancies();
 
+        if (vacancies == 0){
+            throw new RuntimeException("No vacancies available for this class.");
+        }
+
+        Student student = studentService.findById(studentClassDTO.studentId());
+
+        StudentClass studentClass = new StudentClass();
         studentClass.setStudent(student);
         studentClass.setSubjectClass(subjectClass);
 

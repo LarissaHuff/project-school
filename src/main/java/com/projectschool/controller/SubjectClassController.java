@@ -1,7 +1,9 @@
 package com.projectschool.controller;
 
+import com.projectschool.dto.StudentViewDTO;
 import com.projectschool.dto.SubjectClassDTO;
 import com.projectschool.dto.SubjectClassViewDTO;
+import com.projectschool.model.Student;
 import com.projectschool.model.SubjectClass;
 import com.projectschool.service.SubjectClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class SubjectClassController {
         classService.register(subjectClassDTO);
     }
 
-    public SubjectClassViewDTO findById(Long id){
+    @GetMapping("/{id}")
+    public SubjectClassViewDTO findById(@PathVariable Long id) {
         return new SubjectClassViewDTO(classService.findById(id));
 
     }
@@ -46,5 +49,11 @@ public class SubjectClassController {
         return classService.findAll();
     }
 
+    @GetMapping("/{id}/students")
+    public List<StudentViewDTO> findAllStudentsByClass(@PathVariable Long id) {
+        return classService.findAllStudentsByClass(id).stream()
+                .map(StudentViewDTO::new)
+                .collect(Collectors.toList());
 
+    }
 }

@@ -26,6 +26,7 @@ public class StudentClassController {
     @PostMapping
     public void register(@RequestBody StudentClassDTO studentClassDTO){
         studentClassService.register(studentClassDTO);
+
     }
 
 }
