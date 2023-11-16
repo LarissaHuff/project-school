@@ -34,6 +34,10 @@ public class SubjectClassService {
         repository.save(subjectClass);
     }
 
+    public SubjectClass findById(Long id){
+        return repository.findById(id).orElseThrow();
+    }
+
     public Set<SubjectClass>findAllBySubject(Long subjectId){
        Subject subject = subjectService.findById(subjectId);
        return subject.getSubjectClasses();

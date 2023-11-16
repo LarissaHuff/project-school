@@ -5,21 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table
 @Getter
 @Setter
 public class CourseSubject {
     @EmbeddedId
-    CourseSubjectKey id;
+    private CourseSubjectKey id;
 
     @ManyToOne
     @MapsId("subjectId")
     @JoinColumn(name = "subject_id")
-    Subject subject;
+    private Subject subject;
 
     @ManyToOne
     @MapsId("courseId")
     @JoinColumn(name = "course_id")
-    Course course;
+    private Course course;
 
     private String semester;
 

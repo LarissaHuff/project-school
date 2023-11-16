@@ -44,7 +44,7 @@ public class CourseSubjectService {
     public List<CourseSubjectViewDTO> getAll() {
         List<CourseSubject> courseSubjectList = courseSubjectRepository.findAll();
         return courseSubjectList.stream()
-                .map(it -> new CourseSubjectViewDTO(it))
+                .map(CourseSubjectViewDTO::new)
                 .collect(Collectors.toList());
     }
 

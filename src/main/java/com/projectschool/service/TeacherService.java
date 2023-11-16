@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class TeacherService {
     @Autowired
-    TeacherRepository repository;
+    private TeacherRepository repository;
+
+    @Autowired
+    private PersonService personService;
 
     public void register(TeacherDTO teacherDTO) {
-        Teacher teacher = new Teacher();
-        Person person = findById(teacherDTO.personId()).getPerson();
+        Person person = personService.getById(teacherDTO.personId());
 
+        Teacher teacher = new Teacher();
         teacher.setPerson(person);
 
         repository.save(teacher);

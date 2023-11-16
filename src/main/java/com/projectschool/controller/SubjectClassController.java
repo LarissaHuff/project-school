@@ -19,27 +19,32 @@ public class SubjectClassController {
 
     @PostMapping
     public void register(@RequestBody SubjectClassDTO subjectClassDTO) {
-       classService.register(subjectClassDTO);
+        classService.register(subjectClassDTO);
+    }
+
+    public SubjectClassViewDTO findById(Long id){
+        return new SubjectClassViewDTO(classService.findById(id));
+
     }
 
     @GetMapping("/subject/{subjectId}")
-    public Set<SubjectClassViewDTO> findAllBySubject(@PathVariable Long subjectId){
+    public Set<SubjectClassViewDTO> findAllBySubject(@PathVariable Long subjectId) {
         return classService.findAllBySubject(subjectId).stream()
                 .map(SubjectClassViewDTO::new)
                 .collect(Collectors.toSet());
     }
+
     @GetMapping("/teacher/{teacherId}")
-    public List<SubjectClassViewDTO> findAllByTeacher(@PathVariable Long teacherId){
+    public List<SubjectClassViewDTO> findAllByTeacher(@PathVariable Long teacherId) {
         return classService.findAllByTeacher(teacherId).stream()
                 .map(SubjectClassViewDTO::new)
                 .collect(Collectors.toList());
     }
 
     @GetMapping
-    public List<SubjectClass>findAll(){
+    public List<SubjectClass> findAll() {
         return classService.findAll();
     }
-
 
 
 }

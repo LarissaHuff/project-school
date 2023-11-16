@@ -18,11 +18,14 @@ public class SubjectClass {
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
+
     @OneToMany(mappedBy="subjectClass")
     private Set<StudentClass> studentClassSet;
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
+
+    //private Integer vacancies;
 
 
 

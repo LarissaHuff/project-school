@@ -25,7 +25,6 @@ public class CourseSubjectController {
 
     @GetMapping
     public List<CourseSubjectViewDTO> getAll() {
-
         return courseSubjectService.getAll();
     }
 

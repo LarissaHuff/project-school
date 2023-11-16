@@ -9,14 +9,17 @@ import lombok.Setter;
 @Setter
 @Getter
 public class StudentClass {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    @EmbeddedId
+    StudentClassKey id;
+
     @ManyToOne
+    @MapsId("studentId")
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @ManyToOne
+    @MapsId("subjectClassId")
     @JoinColumn(name = "subject_class_id", nullable = false)
     private SubjectClass subjectClass;
 
