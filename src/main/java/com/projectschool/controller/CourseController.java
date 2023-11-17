@@ -30,7 +30,7 @@ public class CourseController {
 
         return courseList.stream()
                 .map(CourseViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
 
         /*
         var list = new ArrayList<CourseViewDTO>();

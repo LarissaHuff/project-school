@@ -23,7 +23,7 @@ public class StudentService {
         Course course = courseService.findById(studentDTO.courseId());
 
         boolean thisPersonIsInThisCourse = course.getStudents().stream()
-                .map(it -> it.getPerson())
+                .map(Student::getPerson)
                 .filter(it -> it.getId().equals(studentDTO.personId()))
                 .count() > 0;
 

@@ -30,7 +30,7 @@ public class PersonController {
 
         return personList.stream()
                 .map(PersonViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/{id}")

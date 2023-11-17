@@ -32,7 +32,7 @@ public class StudentController {
     public List<StudentViewDTO> findAll(){
         return studentService.findAll().stream()
                 .map(StudentViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 }
 

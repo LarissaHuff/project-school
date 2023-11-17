@@ -43,7 +43,7 @@ public class SubjectClassController {
     public List<SubjectClassViewDTO> findAllByTeacher(@PathVariable Long teacherId) {
         return classService.findAllByTeacher(teacherId).stream()
                 .map(SubjectClassViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping
@@ -51,14 +51,14 @@ public class SubjectClassController {
         List<SubjectClass> classList = classService.findAll();
         return classList.stream()
                 .map(SubjectClassViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/{id}/students")
     public List<StudentViewDTO> findAllStudentsByClass(@PathVariable Long id) {
         return classService.findAllStudentsByClass(id).stream()
                 .map(StudentViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
 
     }
 }

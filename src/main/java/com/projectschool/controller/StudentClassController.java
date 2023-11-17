@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student-classes")
@@ -26,6 +25,6 @@ public class StudentClassController {
     public List<StudentClassViewDTO> findAllByStudentId(@RequestBody @PathVariable Long studentId) {
         return studentClassService.findAllByStudentId(studentId).stream()
                 .map(StudentClassViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

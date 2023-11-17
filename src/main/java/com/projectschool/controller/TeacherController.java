@@ -35,6 +35,6 @@ public class TeacherController {
         List<Teacher> allTeachers = teacherService.findAll();
         return allTeachers.stream()
                 .map(TeacherViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

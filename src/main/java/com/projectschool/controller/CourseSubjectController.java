@@ -30,7 +30,7 @@ public class CourseSubjectController {
 
         return courseSubjectList.stream()
                 .map(CourseSubjectViewDTO::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/course/{acronym}/subjects")
@@ -42,7 +42,7 @@ public class CourseSubjectController {
                 .map(SubjectByCourseViewDTO::new)
                 .sorted(Comparator.comparing(SubjectByCourseViewDTO::semester))
                 .filter(it -> semester == null || it.semester().equals(semester))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @GetMapping("/{id}")

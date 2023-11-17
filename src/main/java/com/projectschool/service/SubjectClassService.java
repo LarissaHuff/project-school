@@ -56,6 +56,6 @@ public class SubjectClassService {
     public List<Student> findAllStudentsByClass(Long id) {
         return findById(id).getStudentClassSet().stream()
                 .map(StudentClass::getStudent)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

@@ -33,15 +33,13 @@ public class SubjectController {
     public List<SubjectViewDTO> findAllByName(@RequestParam(required = false) String name) {
         List<Subject> subjectList = subjectService.findAllByName(name);
         return subjectList.stream()
-                .map(it -> new SubjectViewDTO(it))
-                .collect(Collectors.toList());
+                .map(SubjectViewDTO::new)
+                .toList();
     }
 
     @GetMapping("/{id}")
     public SubjectViewDTO findById(@PathVariable Long id) {
-
         return new SubjectViewDTO(subjectService.findById(id));
-
     }
 
     @DeleteMapping

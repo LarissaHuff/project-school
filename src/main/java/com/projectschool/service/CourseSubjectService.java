@@ -1,7 +1,5 @@
 package com.projectschool.service;
 
-import com.projectschool.dto.CourseSubjectViewDTO;
-import com.projectschool.dto.SubjectByCourseViewDTO;
 import com.projectschool.model.Course;
 import com.projectschool.model.CourseSubject;
 import com.projectschool.dto.CourseSubjectDTO;
@@ -10,9 +8,7 @@ import com.projectschool.repository.CourseSubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseSubjectService {
