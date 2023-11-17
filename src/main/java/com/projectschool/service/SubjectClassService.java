@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 @Service
 public class SubjectClassService {
     @Autowired
-    SubjectClassRepository repository;
+    private SubjectClassRepository repository;
 
     @Autowired
-    TeacherService teacherService;
+    private TeacherService teacherService;
 
     @Autowired
-    SubjectService subjectService;
+    private SubjectService subjectService;
 
-    public void register(SubjectClassDTO subjectClassDTO) {
+    public Long create(SubjectClassDTO subjectClassDTO) {
 
         Subject subject = subjectService.findById(subjectClassDTO.subjectId());
         Teacher teacher = teacherService.findById(subjectClassDTO.teacherId());
@@ -31,7 +31,7 @@ public class SubjectClassService {
         subjectClass.setSubject(subject);
         subjectClass.setVacancies(subjectClassDTO.vacancies());
 
-        repository.save(subjectClass);
+        return repository.save(subjectClass).getId();
     }
 
     public SubjectClass findById(Long id) {

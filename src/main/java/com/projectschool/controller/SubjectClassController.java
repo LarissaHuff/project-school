@@ -3,12 +3,13 @@ package com.projectschool.controller;
 import com.projectschool.dto.StudentViewDTO;
 import com.projectschool.dto.SubjectClassDTO;
 import com.projectschool.dto.SubjectClassViewDTO;
-import com.projectschool.model.Student;
 import com.projectschool.model.SubjectClass;
 import com.projectschool.service.SubjectClassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,8 +21,9 @@ public class SubjectClassController {
     private SubjectClassService classService;
 
     @PostMapping
-    public void register(@RequestBody SubjectClassDTO subjectClassDTO) {
-        classService.register(subjectClassDTO);
+    public ResponseEntity<Void> create(@RequestBody SubjectClassDTO subjectClassDTO) {
+        Long createdId = classService.create(subjectClassDTO);
+        return ResponseEntity.created(URI.create("/classes/" + createdId)).build();
     }
 
     @GetMapping("/{id}")
@@ -45,8 +47,11 @@ public class SubjectClassController {
     }
 
     @GetMapping
-    public List<SubjectClass> findAll() {
-        return classService.findAll();
+    public List<SubjectClassViewDTO> findAll() {
+        List<SubjectClass> classList = classService.findAll();
+        return classList.stream()
+                .map(SubjectClassViewDTO::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}/students")

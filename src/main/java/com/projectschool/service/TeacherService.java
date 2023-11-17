@@ -7,26 +7,27 @@ import com.projectschool.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeacherService {
     @Autowired
     private TeacherRepository repository;
-
     @Autowired
     private PersonService personService;
 
-    public void register(TeacherDTO teacherDTO) {
-        Person person = personService.getById(teacherDTO.personId());
-
+    public Long create(TeacherDTO teacherDTO) {
+        Person person = personService.findById(teacherDTO.personId());
         Teacher teacher = new Teacher();
         teacher.setPerson(person);
-
-        repository.save(teacher);
-
+        return repository.save(teacher).getId();
     }
 
     public Teacher findById(Long id) {
         return repository.findById(id).orElseThrow();
     }
 
+    public List<Teacher> findAll() {
+        return repository.findAll();
+    }
 }

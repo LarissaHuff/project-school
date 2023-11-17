@@ -12,26 +12,26 @@ import java.util.List;
 @Service
 public class PersonService {
     @Autowired
-    PersonRepository personRepository;
+    private PersonRepository personRepository;
 
-    public void registerPerson(PersonDTO personDTO) {
+    public Long createPerson(PersonDTO personDTO) {
         Person person = new Person();
         person.setName(personDTO.name());
         person.setBirthDate(personDTO.birthDate());
         person.setDocumentNumber(personDTO.documentNumber());
         person.setDocumentType(personDTO.documentType());
 
-        personRepository.save(person);
+        return personRepository.save(person).getId();
     }
 
-    public List<Person> getAllByName(String name) {
-        if (name == null) {
+    public List<Person> findAllByName(String name) {
+        if (name==null){
             return personRepository.findAll();
         }
         return personRepository.findAllByNameContainingIgnoreCase(name);
     }
 
-    public Person getById(Long id) {
+    public Person findById(Long id) {
         return personRepository.findById(id).orElseThrow();
     }
 
@@ -40,7 +40,7 @@ public class PersonService {
     }
 
     public void updatePerson(Long id, PersonDTO personDTO) {
-        Person person = getById(id);
+        Person person = findById(id);
 
         person.setName(personDTO.name());
         person.setBirthDate(personDTO.birthDate());

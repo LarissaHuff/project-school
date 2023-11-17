@@ -5,20 +5,23 @@ import com.projectschool.dto.SubjectViewDTO;
 import com.projectschool.model.Subject;
 import com.projectschool.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/subject")
+@RequestMapping("/subjects")
 public class SubjectController {
     @Autowired
-    SubjectService subjectService;
+    private SubjectService subjectService;
 
     @PostMapping
-    public void register(@RequestBody SubjectDTO subjectDTO) {
-        subjectService.register(subjectDTO);
+    public ResponseEntity<Void> create(@RequestBody SubjectDTO subjectDTO) {
+        Long createdId= subjectService.create(subjectDTO);
+        return ResponseEntity.created(URI.create("/subjects/" + createdId)).build();
     }
 
     @PutMapping("/{id}")

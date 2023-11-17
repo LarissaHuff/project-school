@@ -13,13 +13,13 @@ import java.util.List;
 @Service
 public class StudentService {
     @Autowired
-    StudentRepository studentRepository;
+    private StudentRepository studentRepository;
     @Autowired
-    PersonService personService;
+    private PersonService personService;
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
 
-    public void register(StudentDTO studentDTO) {
+    public Long create(StudentDTO studentDTO) {
         Course course = courseService.findById(studentDTO.courseId());
 
         boolean thisPersonIsInThisCourse = course.getStudents().stream()
@@ -36,10 +36,10 @@ public class StudentService {
         }
 
         Student student = new Student();
-        student.setPerson(personService.getById(studentDTO.personId()));
+        student.setPerson(personService.findById(studentDTO.personId()));
         student.setCourse(course);
 
-        studentRepository.save(student);
+        return studentRepository.save(student).getId();
     }
 
     public Student findById(Long id) {

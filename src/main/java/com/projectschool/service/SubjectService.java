@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class SubjectService {
     @Autowired
-    SubjectRepository subjectRepository;
+    private SubjectRepository subjectRepository;
 
     public List<Subject> findAllByName(String name) {
         if (name == null) {
@@ -28,11 +28,11 @@ public class SubjectService {
         subjectRepository.deleteById(id);
     }
 
-    public void register(SubjectDTO subjectDTO) {
+    public Long create(SubjectDTO subjectDTO) {
         Subject subject = new Subject();
         subject.setName(subjectDTO.name());
         subject.setDescription(subjectDTO.description());
-        subjectRepository.save(subject);
+        return subjectRepository.save(subject).getId();
     }
 
     public void updateSubject(Long id, SubjectDTO subjectDTO){

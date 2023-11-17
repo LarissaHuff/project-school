@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public class CourseService {
     @Autowired
-    CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
-    public Long register(CourseDTO courseDTO) {
+    public Long create(CourseDTO courseDTO) {
         Course course = new Course();
         course.setName(courseDTO.name());
         course.setDescription(courseDTO.description());
@@ -22,7 +22,7 @@ public class CourseService {
         return courseRepository.save(course).getId();
     }
 
-    public List<Course> getAllByName(String name) {
+    public List<Course> findAllByName(String name) {
         if (name == null) {
             return courseRepository.findAll();
         }

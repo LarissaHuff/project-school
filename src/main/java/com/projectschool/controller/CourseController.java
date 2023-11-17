@@ -12,29 +12,28 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpStatus.CREATED;
-
 @RestController
 @RequestMapping("/courses")
 public class CourseController {
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<Void> register(@RequestBody CourseDTO courseDTO) {
-        var createdId = courseService.register(courseDTO);
+    public ResponseEntity<Void> create(@RequestBody CourseDTO courseDTO) {
+        var createdId = courseService.create(courseDTO);
         return ResponseEntity.created(URI.create("/courses/" + createdId)).build();
     }
 
     @GetMapping
-    public List<CourseViewDTO> getAllByName(@RequestParam(required = false) String name) {
-        List<Course> courseList = courseService.getAllByName(name);
+    public List<CourseViewDTO> findAllByName(@RequestParam(required = false) String name) {
+        List<Course> courseList = courseService.findAllByName(name);
 
         return courseList.stream()
                 .map(CourseViewDTO::new)
                 .collect(Collectors.toList());
 
-        /*var list = new ArrayList<CourseViewDTO>();
+        /*
+        var list = new ArrayList<CourseViewDTO>();
         for (Course course : courseList) {
             var courseViewDTO = new CourseViewDTO(course);
             list.add(courseViewDTO);
@@ -59,6 +58,4 @@ public class CourseController {
         courseService.update(id, courseDTO);
 
     }
-
-
 }

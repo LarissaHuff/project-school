@@ -1,33 +1,41 @@
 package com.projectschool.controller;
 
 import com.projectschool.dto.PersonDTO;
+import com.projectschool.dto.PersonViewDTO;
 import com.projectschool.model.Person;
 import com.projectschool.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/persons")
 public class PersonController {
     @Autowired
-    PersonService personService;
+    private PersonService personService;
 
     @PostMapping
-    public void register(@RequestBody PersonDTO personDTO) {
-        personService.registerPerson(personDTO);
+    public ResponseEntity<Void> create(@RequestBody PersonDTO personDTO) {
+        Long createdId = personService.createPerson(personDTO);
+        return ResponseEntity.created(URI.create("/persons/" + createdId)).build();
     }
 
     @GetMapping
-    public List<Person> getAllByName(@RequestParam(required = false) String name) {
-        return personService.getAllByName(name);
+    public List<PersonViewDTO> getAllByName(@RequestParam(required = false) String name) {
+        List<Person> personList = personService.findAllByName(name);
+
+        return personList.stream()
+                .map(PersonViewDTO::new)
+                .collect(Collectors.toList());
     }
 
-
     @GetMapping("/{id}")
-    public Person getById(@PathVariable Long id) {
-        return personService.getById(id);
+    public PersonViewDTO getById(@PathVariable Long id) {
+        return new PersonViewDTO(personService.findById(id));
     }
 
     @DeleteMapping("/{id}")

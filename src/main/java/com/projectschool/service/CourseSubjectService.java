@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class CourseSubjectService {
     @Autowired
-    CourseSubjectRepository courseSubjectRepository;
+    private CourseSubjectRepository courseSubjectRepository;
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
     @Autowired
-    SubjectService subjectService;
+    private SubjectService subjectService;
 
-    public void register(CourseSubjectDTO courseSubjectDTO) {
+    public void create(CourseSubjectDTO courseSubjectDTO) {
         var course = courseService.findById(courseSubjectDTO.courseId());
         var subject = subjectService.findById(courseSubjectDTO.subjectId());
 
@@ -41,28 +41,33 @@ public class CourseSubjectService {
         courseSubjectRepository.save(courseSubject);
     }
 
-    public List<CourseSubjectViewDTO> getAll() {
-        List<CourseSubject> courseSubjectList = courseSubjectRepository.findAll();
-        return courseSubjectList.stream()
-                .map(CourseSubjectViewDTO::new)
-                .collect(Collectors.toList());
+    public List<CourseSubject> findAll() {
+        return courseSubjectRepository.findAll();
     }
 
-    public CourseSubjectViewDTO getById(CourseSubjectKey courseSubjectKey) {
-        return new CourseSubjectViewDTO(courseSubjectRepository.findById(courseSubjectKey).orElseThrow());
+    public CourseSubject findById(CourseSubjectKey courseSubjectKey) {
+        return courseSubjectRepository.findById(courseSubjectKey).orElseThrow();
 
     }
 
 
-    public List<SubjectByCourseViewDTO> getAllSubjectsByCourse(String acronym, String semester) {
+    public List<CourseSubject> findAllSubjectsByCourse(String acronym, String semester) {
+        CourseSubject courseSubject = new CourseSubject();
         Course course = courseService.findByAcronym(acronym);
-        List<CourseSubject> courseSubject = courseSubjectRepository.findAllByCourseId(course.getId());
+        courseSubject.setSemester(semester);
 
-        return courseSubject.stream()
-                .map(SubjectByCourseViewDTO::new)
-                .sorted(Comparator.comparing(SubjectByCourseViewDTO::semester))
-                .filter(it -> semester == null || it.semester().equals(semester))
-                .collect(Collectors.toList());
+        return courseSubjectRepository.findAllByCourseId(course.getId());
+
+    }
+
+    public void deleteById(CourseSubjectKey courseSubjectKey) {
+        Long courseId = courseSubjectKey.getCourseId();
+        courseSubjectKey.setCourseId(courseId);
+
+        Long subjectId = courseSubjectKey.getSubjectId();
+        courseSubjectKey.setSubjectId(subjectId);
+
+        courseSubjectRepository.deleteById(courseSubjectKey);
     }
 
 }

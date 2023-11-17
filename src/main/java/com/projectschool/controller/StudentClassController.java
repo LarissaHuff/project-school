@@ -10,23 +10,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/student-class")
+@RequestMapping("/student-classes")
 public class StudentClassController {
 
     @Autowired
-    StudentClassService studentClassService;
+    private StudentClassService studentClassService;
+
+    @PostMapping
+    public void create(@RequestBody StudentClassDTO studentClassDTO) {
+        studentClassService.create(studentClassDTO);
+
+    }
 
     @GetMapping("/student/{studentId}")
-    public List<StudentClassViewDTO> findAllByStudentId(@RequestBody @PathVariable Long studentId){
+    public List<StudentClassViewDTO> findAllByStudentId(@RequestBody @PathVariable Long studentId) {
         return studentClassService.findAllByStudentId(studentId).stream()
                 .map(StudentClassViewDTO::new)
                 .collect(Collectors.toList());
     }
-
-    @PostMapping
-    public void register(@RequestBody StudentClassDTO studentClassDTO){
-        studentClassService.register(studentClassDTO);
-
-    }
-
 }

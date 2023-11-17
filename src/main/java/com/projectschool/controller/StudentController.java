@@ -4,20 +4,23 @@ import com.projectschool.dto.StudentDTO;
 import com.projectschool.dto.StudentViewDTO;
 import com.projectschool.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
 public class StudentController {
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
 
     @PostMapping
-    public void register(@RequestBody StudentDTO studentDTO){
-        studentService.register(studentDTO);
+    public ResponseEntity<Void> create(@RequestBody StudentDTO studentDTO){
+        Long createdId = studentService.create(studentDTO);
+        return ResponseEntity.created(URI.create("/students/" + createdId)).build();
     }
 
     @GetMapping("/{id}")

@@ -3,42 +3,56 @@ package com.projectschool.controller;
 import com.projectschool.dto.CourseSubjectDTO;
 import com.projectschool.dto.CourseSubjectViewDTO;
 import com.projectschool.dto.SubjectByCourseViewDTO;
+import com.projectschool.model.CourseSubject;
 import com.projectschool.model.CourseSubjectKey;
 import com.projectschool.service.CourseSubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RequestMapping("/course-subject")
+@RequestMapping("/course-subjects")
 @RestController
 public class CourseSubjectController {
     @Autowired
-    CourseSubjectService courseSubjectService;
+    private CourseSubjectService courseSubjectService;
 
     @PostMapping
-    public void register(@RequestBody CourseSubjectDTO courseSubjectDTO) {
-
-        courseSubjectService.register(courseSubjectDTO);
-
+    public void create(@RequestBody CourseSubjectDTO courseSubjectDTO) {
+        courseSubjectService.create(courseSubjectDTO);
     }
 
     @GetMapping
-    public List<CourseSubjectViewDTO> getAll() {
-        return courseSubjectService.getAll();
+    public List<CourseSubjectViewDTO> findAll() {
+        List<CourseSubject> courseSubjectList = courseSubjectService.findAll();
+
+        return courseSubjectList.stream()
+                .map(CourseSubjectViewDTO::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/course/{acronym}/subjects")
-    public List<SubjectByCourseViewDTO> getAllByCourse(@PathVariable String acronym, @RequestParam(required = false) String semester) {
-        return courseSubjectService.getAllSubjectsByCourse(acronym, semester);
+    public List<SubjectByCourseViewDTO> findAllByCourse(@PathVariable String acronym, @RequestParam(required = false) String semester) {
+
+        List<CourseSubject> allSubjectsByCourse = courseSubjectService.findAllSubjectsByCourse(acronym, semester);
+
+        return allSubjectsByCourse.stream()
+                .map(SubjectByCourseViewDTO::new)
+                .sorted(Comparator.comparing(SubjectByCourseViewDTO::semester))
+                .filter(it -> semester == null || it.semester().equals(semester))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public CourseSubjectViewDTO getById(@PathVariable CourseSubjectKey courseSubjectKey) {
-        return courseSubjectService.getById(courseSubjectKey);
+    public CourseSubjectViewDTO findById(@PathVariable CourseSubjectKey courseSubjectKey) {
+        return new CourseSubjectViewDTO(courseSubjectService.findById(courseSubjectKey));
     }
 
-
-
-
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable CourseSubjectKey courseSubjectKey) {
+        courseSubjectService.deleteById(courseSubjectKey);
+    }
 }
+

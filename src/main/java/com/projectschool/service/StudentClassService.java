@@ -14,17 +14,17 @@ import java.util.List;
 @Service
 public class StudentClassService {
     @Autowired
-    StudentClassRepository studentClassRepository;
+    private StudentClassRepository studentClassRepository;
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
     @Autowired
-    SubjectClassService subjectClassService;
+    private SubjectClassService subjectClassService;
 
-    public void register(StudentClassDTO studentClassDTO) {
+    public void create(StudentClassDTO studentClassDTO) {
         SubjectClass subjectClass = subjectClassService.findById(studentClassDTO.subjectClassId());
         Integer vacancies = subjectClass.getAvailableVacancies();
 
-        if (vacancies == 0){
+        if (vacancies == 0) {
             throw new RuntimeException("No vacancies available for this class.");
         }
 
@@ -46,5 +46,8 @@ public class StudentClassService {
     public List<StudentClass> findAllByStudentId(Long studentId) {
         return studentClassRepository.findAllByStudentId(studentId);
     }
+
+
+
 
 }
