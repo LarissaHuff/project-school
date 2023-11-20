@@ -1,6 +1,8 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.SubjectClassDTO;
+import com.projectschool.dto.SubjectClassUpdateDTO;
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.*;
 import com.projectschool.repository.SubjectClassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class SubjectClassService {
@@ -30,12 +31,14 @@ public class SubjectClassService {
         subjectClass.setTeacher(teacher);
         subjectClass.setSubject(subject);
         subjectClass.setVacancies(subjectClassDTO.vacancies());
+        subjectClass.setStatus(subjectClassDTO.subjectClassStatus());
 
         return repository.save(subjectClass).getId();
     }
 
     public SubjectClass findById(Long id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Subject Class"));
     }
 
     public Set<SubjectClass> findAllBySubject(Long subjectId) {
@@ -57,5 +60,17 @@ public class SubjectClassService {
         return findById(id).getStudentClassSet().stream()
                 .map(StudentClass::getStudent)
                 .toList();
+    }
+
+    public void update(SubjectClassUpdateDTO updateDTO, Long subjectClassId) {
+        SubjectClass subjectClass = findById(subjectClassId);
+
+        Teacher teacher = teacherService.findById(updateDTO.teacherId());
+
+        subjectClass.setVacancies(updateDTO.vacancies());
+        subjectClass.setTeacher(teacher);
+        subjectClass.setStatus(updateDTO.subjectClassStatus());
+
+        repository.save(subjectClass);
     }
 }

@@ -4,6 +4,7 @@ import com.projectschool.dto.PersonDTO;
 import com.projectschool.dto.PersonViewDTO;
 import com.projectschool.model.Person;
 import com.projectschool.service.PersonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class PersonController {
     private PersonService personService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody PersonDTO personDTO) {
+    public ResponseEntity<Void> create(@Valid @RequestBody PersonDTO personDTO) {
         Long createdId = personService.createPerson(personDTO);
         return ResponseEntity.created(URI.create("/persons/" + createdId)).build();
     }

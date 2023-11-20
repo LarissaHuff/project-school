@@ -4,6 +4,7 @@ import com.projectschool.dto.CourseDTO;
 import com.projectschool.dto.CourseViewDTO;
 import com.projectschool.model.Course;
 import com.projectschool.service.CourseService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody CourseDTO courseDTO) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CourseDTO courseDTO) {
         var createdId = courseService.create(courseDTO);
         return ResponseEntity.created(URI.create("/courses/" + createdId)).build();
     }

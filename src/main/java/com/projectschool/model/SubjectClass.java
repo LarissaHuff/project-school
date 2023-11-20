@@ -1,10 +1,14 @@
 package com.projectschool.model;
 
+import com.projectschool.enumeration.SubjectClassStatus;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
+
+import static com.projectschool.enumeration.SubjectClassStatus.OPEN;
 
 @Entity
 @Table
@@ -19,19 +23,22 @@ public class SubjectClass {
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
-    @OneToMany(mappedBy="subjectClass")
+    @OneToMany(mappedBy = "subjectClass")
     private Set<StudentClass> studentClassSet;
     @ManyToOne
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
     private Integer vacancies;
 
+    @Enumerated(EnumType.STRING)
+    private SubjectClassStatus status = OPEN;
+
     public Integer getAvailableVacancies() {
         Integer occupied = studentClassSet.size();
-         return vacancies - occupied;
+        return vacancies - occupied;
     }
 
-    public Integer occupiedVacancies(){
+    public Integer occupiedVacancies() {
         return studentClassSet.size();
     }
 

@@ -4,6 +4,7 @@ import com.projectschool.dto.SubjectDTO;
 import com.projectschool.dto.SubjectViewDTO;
 import com.projectschool.model.Subject;
 import com.projectschool.service.SubjectService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody SubjectDTO subjectDTO) {
+    public ResponseEntity<Void> create(@Valid @RequestBody SubjectDTO subjectDTO) {
         Long createdId= subjectService.create(subjectDTO);
         return ResponseEntity.created(URI.create("/subjects/" + createdId)).build();
     }

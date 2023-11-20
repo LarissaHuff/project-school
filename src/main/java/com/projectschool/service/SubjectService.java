@@ -1,6 +1,7 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.SubjectDTO;
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.Subject;
 import com.projectschool.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class SubjectService {
     }
 
     public Subject findById(Long id) {
-        return subjectRepository.findById(id).orElseThrow();
+        return subjectRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Subject"));
     }
 
     public void delete(Long id) {
@@ -35,7 +37,7 @@ public class SubjectService {
         return subjectRepository.save(subject).getId();
     }
 
-    public void updateSubject(Long id, SubjectDTO subjectDTO){
+    public void updateSubject(Long id, SubjectDTO subjectDTO) {
         Subject subject = findById(id);
         subject.setName(subjectDTO.name());
         subject.setDescription(subjectDTO.description());

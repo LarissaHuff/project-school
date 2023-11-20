@@ -1,5 +1,6 @@
 package com.projectschool.service;
 
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.Course;
 import com.projectschool.model.CourseSubject;
 import com.projectschool.dto.CourseSubjectDTO;
@@ -42,7 +43,8 @@ public class CourseSubjectService {
     }
 
     public CourseSubject findById(CourseSubjectKey courseSubjectKey) {
-        return courseSubjectRepository.findById(courseSubjectKey).orElseThrow();
+        return courseSubjectRepository.findById(courseSubjectKey)
+                .orElseThrow(() -> new NotFoundException("Course Subject"));
 
     }
 

@@ -54,5 +54,8 @@ public class CourseSubjectController {
     public void deleteById(@PathVariable CourseSubjectKey courseSubjectKey) {
         courseSubjectService.deleteById(courseSubjectKey);
     }
+
+
+
 }
 

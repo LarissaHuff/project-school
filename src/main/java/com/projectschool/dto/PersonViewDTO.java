@@ -1,7 +1,7 @@
 package com.projectschool.dto;
 
 import com.projectschool.model.Person;
-import com.projectschool.service.DocumentType;
+import com.projectschool.enumeration.DocumentType;
 
 import java.time.LocalDate;
 

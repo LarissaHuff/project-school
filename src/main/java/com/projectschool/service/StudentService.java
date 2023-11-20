@@ -1,6 +1,8 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.StudentDTO;
+import com.projectschool.exception.BusinessException;
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.Course;
 import com.projectschool.model.Student;
 import com.projectschool.repository.StudentRepository;
@@ -32,7 +34,7 @@ public class StudentService {
                 .anyMatch(it->it.getId().equals(studentDTO.personId()));*/
 
         if (thisPersonIsInThisCourse) {
-            throw new RuntimeException("Person already registered in this course.");
+            throw new BusinessException("Person already registered in this course.");
         }
 
         Student student = new Student();
@@ -43,7 +45,8 @@ public class StudentService {
     }
 
     public Student findById(Long id) {
-        return studentRepository.findById(id).orElseThrow();
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student"));
 
     }
 

@@ -1,6 +1,7 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.CourseDTO;
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.Course;
 import com.projectschool.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class CourseService {
     }
 
     public Course findById(Long id) {
-        return courseRepository.findById(id).orElseThrow();
+        return courseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Course"));
     }
 
     public void deleteById(Long id) {
@@ -48,7 +50,8 @@ public class CourseService {
 
 
     public Course findByAcronym(String acronym) {
-        return courseRepository.findByAcronym(acronym).orElseThrow();
+        return courseRepository.findByAcronym(acronym)
+                .orElseThrow(() -> new NotFoundException("Course"));
 
     }
 }

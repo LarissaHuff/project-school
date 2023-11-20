@@ -1,6 +1,6 @@
 package com.projectschool.model;
 
-import com.projectschool.service.DocumentType;
+import com.projectschool.enumeration.DocumentType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

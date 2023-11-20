@@ -1,6 +1,7 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.PersonDTO;
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.Person;
 import com.projectschool.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,15 @@ public class PersonService {
     }
 
     public List<Person> findAllByName(String name) {
-        if (name==null){
+        if (name == null) {
             return personRepository.findAll();
         }
         return personRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     public Person findById(Long id) {
-        return personRepository.findById(id).orElseThrow();
+        return personRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Person"));
     }
 
     public void deleteById(Long id) {

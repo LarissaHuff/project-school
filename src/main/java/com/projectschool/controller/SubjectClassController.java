@@ -2,9 +2,11 @@ package com.projectschool.controller;
 
 import com.projectschool.dto.StudentViewDTO;
 import com.projectschool.dto.SubjectClassDTO;
+import com.projectschool.dto.SubjectClassUpdateDTO;
 import com.projectschool.dto.SubjectClassViewDTO;
 import com.projectschool.model.SubjectClass;
 import com.projectschool.service.SubjectClassService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ public class SubjectClassController {
     private SubjectClassService classService;
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody SubjectClassDTO subjectClassDTO) {
+    public ResponseEntity<Void> create(@Valid @RequestBody SubjectClassDTO subjectClassDTO) {
         Long createdId = classService.create(subjectClassDTO);
         return ResponseEntity.created(URI.create("/classes/" + createdId)).build();
     }
@@ -61,4 +63,11 @@ public class SubjectClassController {
                 .toList();
 
     }
+
+    @PutMapping("/{subjectClassId}")
+    public void update(@RequestBody SubjectClassUpdateDTO updateDTO, @PathVariable Long subjectClassId) {
+        classService.update(updateDTO, subjectClassId);
+    }
+
+
 }

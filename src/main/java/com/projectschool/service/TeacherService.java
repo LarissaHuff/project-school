@@ -1,6 +1,7 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.TeacherDTO;
+import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.Person;
 import com.projectschool.model.Teacher;
 import com.projectschool.repository.TeacherRepository;
@@ -24,7 +25,8 @@ public class TeacherService {
     }
 
     public Teacher findById(Long id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Teacher"));
     }
 
     public List<Teacher> findAll() {
