@@ -1,17 +1,17 @@
 package com.projectschool.service;
 
 import com.projectschool.dto.StudentClassDTO;
+import com.projectschool.dto.StudentClassStatusDTO;
 import com.projectschool.enumeration.SubjectClassStatus;
 import com.projectschool.exception.BusinessException;
-import com.projectschool.model.Student;
-import com.projectschool.model.StudentClass;
-import com.projectschool.model.StudentClassKey;
-import com.projectschool.model.SubjectClass;
+import com.projectschool.exception.NotFoundException;
+import com.projectschool.model.*;
 import com.projectschool.repository.StudentClassRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentClassService {
@@ -32,6 +32,7 @@ public class StudentClassService {
         StudentClass studentClass = new StudentClass();
         studentClass.setStudent(student);
         studentClass.setSubjectClass(subjectClass);
+        studentClass.setStatus(studentClassDTO.status());
 
         StudentClassKey studentClassKey = new StudentClassKey();
         studentClassKey.setStudentId(studentClassDTO.studentId());
@@ -44,6 +45,24 @@ public class StudentClassService {
 
     public List<StudentClass> findAllByStudentId(Long studentId) {
         return studentClassRepository.findAllByStudentId(studentId);
+    }
+
+    public StudentClass findById(StudentClassKey studentClassKey){
+       return studentClassRepository.findById(studentClassKey)
+               .orElseThrow(() -> new NotFoundException("Student Class"));
+    }
+
+    public void update(StudentClassStatusDTO statusDTO, Long studentId, Long subjectClassId ){
+        StudentClassKey studentClassKey = new StudentClassKey();
+        studentClassKey.setStudentId(studentId);
+        studentClassKey.setSubjectClassId(subjectClassId);
+
+        StudentClass studentClass = findById(studentClassKey);
+
+        studentClass.setStatus(statusDTO.studentClassStatus());
+
+        studentClassRepository.save(studentClass);
+
     }
 
     private void validateStudentClass(SubjectClass subjectClass) {

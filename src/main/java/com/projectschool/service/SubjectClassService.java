@@ -5,6 +5,8 @@ import com.projectschool.dto.SubjectClassUpdateDTO;
 import com.projectschool.exception.NotFoundException;
 import com.projectschool.model.*;
 import com.projectschool.repository.SubjectClassRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubjectClassService {
     @Autowired
     private SubjectClassRepository repository;

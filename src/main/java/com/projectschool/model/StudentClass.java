@@ -1,8 +1,11 @@
 package com.projectschool.model;
 
+import com.projectschool.enumeration.StudentClassStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import static com.projectschool.enumeration.StudentClassStatus.REGISTERED;
 
 @Entity
 @Table
@@ -22,6 +25,9 @@ public class StudentClass {
     @MapsId("subjectClassId")
     @JoinColumn(name = "subject_class_id", nullable = false)
     private SubjectClass subjectClass;
+
+    @Enumerated(EnumType.STRING)
+    private StudentClassStatus status = REGISTERED;
 
 
 }

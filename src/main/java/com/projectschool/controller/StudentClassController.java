@@ -1,6 +1,7 @@
 package com.projectschool.controller;
 
 import com.projectschool.dto.StudentClassDTO;
+import com.projectschool.dto.StudentClassStatusDTO;
 import com.projectschool.dto.StudentClassViewDTO;
 import com.projectschool.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class StudentClassController {
         return studentClassService.findAllByStudentId(studentId).stream()
                 .map(StudentClassViewDTO::new)
                 .toList();
+    }
+
+    @PutMapping("/student/{studentId}/classes/{subjectClassId}")
+    public void update(@RequestBody StudentClassStatusDTO statusDTO, @PathVariable Long studentId, @PathVariable Long subjectClassId) {
+        studentClassService.update(statusDTO, studentId, subjectClassId);
     }
 }
