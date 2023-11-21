@@ -52,12 +52,17 @@ public class StudentClassService {
                .orElseThrow(() -> new NotFoundException("Student Class"));
     }
 
-    public void update(StudentClassStatusDTO statusDTO, Long studentId, Long subjectClassId ){
+    public StudentClass findById(Long studentId, Long subjectClassId){
         StudentClassKey studentClassKey = new StudentClassKey();
         studentClassKey.setStudentId(studentId);
         studentClassKey.setSubjectClassId(subjectClassId);
 
-        StudentClass studentClass = findById(studentClassKey);
+        return studentClassRepository.findById(studentClassKey)
+                .orElseThrow(() -> new NotFoundException("Student Class"));
+    }
+
+    public void update(StudentClassStatusDTO statusDTO, Long studentId, Long subjectClassId ){
+        StudentClass studentClass = findById(studentId, subjectClassId);
 
         studentClass.setStatus(statusDTO.studentClassStatus());
 

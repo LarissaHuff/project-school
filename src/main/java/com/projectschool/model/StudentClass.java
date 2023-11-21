@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 import static com.projectschool.enumeration.StudentClassStatus.REGISTERED;
 
 @Entity
@@ -12,9 +14,8 @@ import static com.projectschool.enumeration.StudentClassStatus.REGISTERED;
 @Setter
 @Getter
 public class StudentClass {
-
     @EmbeddedId
-    StudentClassKey id;
+    private StudentClassKey id;
 
     @ManyToOne
     @MapsId("studentId")
@@ -25,6 +26,9 @@ public class StudentClass {
     @MapsId("subjectClassId")
     @JoinColumn(name = "subject_class_id", nullable = false)
     private SubjectClass subjectClass;
+
+    @OneToMany (mappedBy = "studentClass")
+    private Set<Grade> grades;
 
     @Enumerated(EnumType.STRING)
     private StudentClassStatus status = REGISTERED;

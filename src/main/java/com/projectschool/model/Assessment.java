@@ -6,21 +6,20 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Entity
 @Table
+@Entity
 @Getter
 @Setter
-public class Course {
+public class Assessment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String title;
     private String description;
-    private String acronym;
-    @OneToMany(mappedBy = "course")
-    private Set<Student> students;
+    @ManyToOne
+    @JoinColumn(name= "subject_class_id")
+    private SubjectClass subjectClass;
 
-    @OneToMany(mappedBy = "course")
-    private Set<CourseSubject> courseSubjectSet;
-
+    @OneToMany(mappedBy = "assessment")
+    private Set<Grade> grades;
 }
